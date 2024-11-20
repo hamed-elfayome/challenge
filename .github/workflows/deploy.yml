@@ -49,7 +49,6 @@ jobs:
           rsync -avz --no-perms --no-times --delete \
             --delete \
             --exclude='.git' \
-            --exclude='vendor/' \
             --exclude='node_modules/' \
             --exclude='storage/' \
             ./ ${{ secrets.PANEL_USERNAME }}@${{ secrets.SERVER_IP }}:${{ env.PROJECT_PATH }}
