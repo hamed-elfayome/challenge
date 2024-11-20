@@ -63,3 +63,28 @@ This project is a **Laravel-based system** designed to manage applications, chat
 - Messages are indexed post-creation for efficient search capabilities.
 - Non-critical failures in Elasticsearch indexing are gracefully handled.
 
+---
+
+## **Documentation**
+
+### **1. Database Schema**
+The database schema can be found in the `database/migrations` folder. Each migration defines the structure for:
+- **Applications:** `create_applications_table.php`
+- **Chats:** `create_chats_table.php`
+- **Messages:** `create_messages_table.php`
+
+### **2. API Controllers**
+The API controllers are located in the `app/Http/Controllers/v1` directory:
+- **ApplicationController:** Manages application creation and listing.
+- **ChatController:** Handles chat creation and retrieval for applications.
+- **MessageController:** Manages message creation, retrieval, and search.
+
+### **3. Workers (Jobs)**
+The workers are implemented as Laravel Jobs in the `app/Jobs` directory:
+- **CreateApplicationJob:** Creates an application with token management.
+- **CreateChatJob:** Adds chats to applications and manages counters.
+- **SendMessageJob:** Handles message creation and Elasticsearch indexing.
+
+### **4. Tasks**
+Tasks (e.g., token generation and management) are implemented in the `app/Services` directory:
+- **TokenService:** Generates unique tokens using Redis and manages the tracking and cleanup of tokens.
