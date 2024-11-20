@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'elasticsearch' => [
+        'host' => env('ELASTICSEARCH_HOST', 'localhost:9200'),
+    ],
+
 ];

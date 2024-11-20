@@ -1,0 +1,452 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Chat Application API",
+        "description": "API documentation for the Chat application",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/applications": {
+            "get": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "List all applications",
+                "operationId": "bfc5b12ac3d918982a205f1977791ded",
+                "responses": {
+                    "200": {
+                        "description": "List of applications",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "My Application"
+                                            },
+                                            "token": {
+                                                "type": "string",
+                                                "example": "abcd1234token"
+                                            },
+                                            "chats_count": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "example": "2024-11-20T09:52:48.000000Z"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Create a new application",
+                "operationId": "5333dc3f2d597601c5f52ce257874041",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "My Application"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Application created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Application creation request submitted"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "My Application"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "abcd1234token"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2024-11-20T09:52:48.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/applications/{application_token}/chats": {
+            "get": {
+                "tags": [
+                    "Chats"
+                ],
+                "summary": "List all chats for an application",
+                "operationId": "29c06c267b5283b7f6d83b0515d59cb4",
+                "parameters": [
+                    {
+                        "name": "application_token",
+                        "in": "path",
+                        "description": "Token of the application",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of chats",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "number": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "messages_count": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2024-11-19T12:34:56Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Chats"
+                ],
+                "summary": "Create a new chat for an application",
+                "operationId": "cd16204b78c909e22ee5fd29a08d584e",
+                "parameters": [
+                    {
+                        "name": "application_token",
+                        "in": "path",
+                        "description": "Token of the application",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Message created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Chat creation request submitted"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "chat_number": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/applications/{application_token}/chats/{chat_number}/messages": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "List all messages in a chat",
+                "operationId": "5713c423dd222d0b7dbe23f3f442355b",
+                "parameters": [
+                    {
+                        "name": "application_token",
+                        "in": "path",
+                        "description": "Token of the application",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "chat_number",
+                        "in": "path",
+                        "description": "Number of the chat",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of messages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "message_number": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "body": {
+                                                    "type": "integer",
+                                                    "example": "Hello, how are you?"
+                                                },
+                                                "created_at": {
+                                                    "type": "integer",
+                                                    "example": "2024-11-19T12:34:56Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Create a new message in a chat",
+                "operationId": "3d7d855dfd504ceecde09c32719bf0af",
+                "parameters": [
+                    {
+                        "name": "application_token",
+                        "in": "path",
+                        "description": "Token of the application",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "chat_number",
+                        "in": "path",
+                        "description": "Number of the chat",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "body"
+                                ],
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Hello, how are you?"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Message created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message creation request submitted"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "message_number": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/applications/{application_token}/chats/{chat_number}/messages/search": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Search for any match",
+                "operationId": "50b67ad393cc3047830b2befdb17f497",
+                "parameters": [
+                    {
+                        "name": "application_token",
+                        "in": "path",
+                        "description": "Token of the application",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "chat_number",
+                        "in": "path",
+                        "description": "Number of the chat",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query (e.g., 'hi')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of messages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "message_number": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "Hello, how are you?"
+                                                },
+                                                "timestamp": {
+                                                    "type": "string",
+                                                    "example": "2024-11-19T12:34:56Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Applications",
+            "description": "Applications"
+        },
+        {
+            "name": "Chats",
+            "description": "Chats"
+        },
+        {
+            "name": "Messages",
+            "description": "Messages"
+        }
+    ]
+}
