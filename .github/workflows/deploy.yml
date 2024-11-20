@@ -46,7 +46,7 @@ jobs:
 
       - name: Deploy files to the server
         run: |
-          rsync -avz \
+          rsync -avz --no-perms --no-times --delete \
             --delete \
             --exclude='.git' \
             --exclude='vendor/' \
