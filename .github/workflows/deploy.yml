@@ -25,7 +25,6 @@ jobs:
         run: |
           composer install --no-dev --optimize-autoloader --no-progress --no-suggest
 
-      # Setup SSH agent for secure deployment
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -45,15 +44,6 @@ jobs:
             echo "DEPLOYMENT_ENV=testing" >> $GITHUB_ENV
           fi
 
-      - name: Prepare Remote Directory
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.PANEL_USERNAME }}@${{ secrets.SERVER_IP }} << 'EOF'
-            mkdir -p ${{ env.PROJECT_PATH }}
-            chmod -R 755 ${{ env.PROJECT_PATH }}
-            chown -R ${{ secrets.PANEL_USERNAME }}:www-data ${{ env.PROJECT_PATH }}
-            exit
-          EOF
-
       - name: Deploy files to the server
         run: |
           rsync -avz \
@@ -62,28 +52,30 @@ jobs:
             --exclude='vendor/' \
             --exclude='node_modules/' \
             --exclude='storage/' \
-            --chmod=D755,F644 \
             ./ ${{ secrets.PANEL_USERNAME }}@${{ secrets.SERVER_IP }}:${{ env.PROJECT_PATH }}
 
       - name: Finalize Deployment
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.PANEL_USERNAME }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd ${{ env.PROJECT_PATH }}
+            sudo -E bash << INNER_EOF
+              cd ${{ env.PROJECT_PATH }}
 
-            # Composer install with appropriate flags
-            composer install --no-dev --optimize-autoloader
+              chown -R www-data:www-data .
+              find . -type d -exec chmod 755 {} \;
+              find . -type f -exec chmod 644 {} \;
 
-            # Clear various Laravel caches
-            php artisan config:clear
-            php artisan cache:clear
-            php artisan view:clear
-            php artisan route:clear
+              sudo -u www-data composer install --no-dev --optimize-autoloader
 
-            # Rebuild caches for production performance
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+              sudo -u www-data php artisan config:clear
+              sudo -u www-data php artisan cache:clear
+              sudo -u www-data php artisan view:clear
+              sudo -u www-data php artisan route:clear
 
+              sudo -u www-data php artisan config:cache
+              sudo -u www-data php artisan route:cache
+              sudo -u www-data php artisan view:cache
+
+            INNER_EOF
             exit
           EOF
 
