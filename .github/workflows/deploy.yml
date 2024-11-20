@@ -48,6 +48,10 @@ jobs:
         run: |
           rsync -avz \
             --delete \
+            --no-p \
+            --no-o \
+            --no-g \
+            --chmod=D755,F644 \
             --exclude='.git' \
             --exclude='vendor/' \
             --exclude='node_modules/' \
