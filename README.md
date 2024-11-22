@@ -4,6 +4,9 @@ This project is a **Laravel-based system** designed to manage applications, chat
 
 Access the **Live API Documentation** for real testing via [Swagger Documentation](https://chat.instabug-challenge.online/api/documentation).
 
+You can directly test the live version of the API at:  
+`https://chat.instabug-challenge.online/api`, followed by the targeted endpoint.
+
 ---
 
 ## **Key Features**
