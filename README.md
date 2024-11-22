@@ -2,6 +2,8 @@
 
 This project is a **Laravel-based system** designed to manage applications, chats, and messages with a robust architecture. It integrates modern technologies like **RabbitMQ**, **Elasticsearch**, **Redis**, and **Swagger** to ensure scalability, reliability, and ease of use.
 
+Access the **Live API Documentation** for real testing via [Swagger Documentation](https://chat.instabug-challenge.online/api/documentation).
+
 ---
 
 ## **Key Features**
@@ -27,7 +29,8 @@ This project is a **Laravel-based system** designed to manage applications, chat
     - **Elasticsearch:**
         - Stores messages for advanced search capabilities.
         - Ensures quick and efficient retrieval of message data.
-    - **Swagger:** Documents the API endpoints, enabling easy integration and testing.
+    - **Swagger:** Documents the API endpoints, enabling easy integration and testing on a live environment.
+    - **GitHub Actions:** Implements Continuous Deployment (CD) pipelines for automated testing and deployment.
 
 5. **API Design:**
     - Endpoints are versioned under `/v1`.
@@ -51,9 +54,9 @@ This project is a **Laravel-based system** designed to manage applications, chat
 
 ### 3. **Database Design**
 - Relational structure with three main tables:
-    - **Applications**: Tracks `token`, `name`, and `chats_count`.
-    - **Chats**: Associates with applications and tracks `messages_count`.
-    - **Messages**: Stores individual messages with `number` and `body`.
+    - **Applications:** Tracks `token`, `name`, and `chats_count`.
+    - **Chats:** Associates with applications and tracks `messages_count`.
+    - **Messages:** Stores individual messages with `number` and `body`.
 
 ### 4. **Redis Usage**
 - Redis counters ensure atomic operations for IDs.
@@ -67,24 +70,27 @@ This project is a **Laravel-based system** designed to manage applications, chat
 
 ## **Documentation**
 
-### **1. Database Schema**
+### **1. API Documentation**
+The live Swagger documentation for testing the API can be accessed [here](https://chat.instabug-challenge.online/api/documentation).
+
+### **2. Database Schema**
 The database schema can be found in the `database/migrations` folder. Each migration defines the structure for:
 - **Applications:** `create_applications_table.php`
 - **Chats:** `create_chats_table.php`
 - **Messages:** `create_messages_table.php`
 
-### **2. API Controllers**
+### **3. API Controllers**
 The API controllers are located in the `app/Http/Controllers/v1` directory:
 - **ApplicationController:** Manages application creation and listing.
 - **ChatController:** Handles chat creation and retrieval for applications.
 - **MessageController:** Manages message creation, retrieval, and search.
 
-### **3. Workers (Jobs)**
+### **4. Workers (Jobs)**
 The workers are implemented as Laravel Jobs in the `app/Jobs` directory:
 - **CreateApplicationJob:** Creates an application with token management.
 - **CreateChatJob:** Adds chats to applications and manages counters.
 - **SendMessageJob:** Handles message creation and Elasticsearch indexing.
 
-### **4. Tasks**
-Tasks (e.g., token generation and management) are implemented in the `app/Services` directory:
+### **5. Tasks**
+Tasks (e.g., token generation) are implemented in the `app/Services` directory:
 - **TokenService:** Generates unique tokens using Redis and manages the tracking and cleanup of tokens.
