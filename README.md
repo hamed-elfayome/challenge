@@ -33,7 +33,7 @@ You can directly test the live version of the API at:
         - Stores messages for advanced search capabilities.
         - Ensures quick and efficient retrieval of message data.
     - **Swagger:** Documents the API endpoints, enabling easy integration and testing on a live environment.
-    - **GitHub Actions:** Implements Continuous Deployment (CD) pipelines for automated testing and deployment.
+    - **GitHub Actions:** Implements Continuous Deployment (CD) pipelines for automated deployment.
 
 5. **API Design:**
     - Endpoints are versioned under `/v1`.
